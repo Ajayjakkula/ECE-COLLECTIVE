@@ -1,4 +1,4 @@
-
+const Post=require("../models/post")
 module.exports.renderPosts = (req, res) => {
     res.send("List of posts : ");
 };

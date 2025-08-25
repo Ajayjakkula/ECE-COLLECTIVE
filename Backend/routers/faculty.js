@@ -3,12 +3,10 @@ const router=express.Router({mergeParams:true})
 
 const {createFaculty,updateFaculty,deleteFaculty,renderFaculties}=require("../controllers/faculty");
 
-router.route("/")
- .get(renderFaculties)
- .post(createFaculty)
- .put(updateFaculty)
- .delete(deleteFaculty)
-
+router.get("/", renderFaculties);
+router.post("/", createFaculty);
+router.put("/:id", updateFaculty);
+router.delete("/:id", deleteFaculty);
 
 
  module.exports = router;

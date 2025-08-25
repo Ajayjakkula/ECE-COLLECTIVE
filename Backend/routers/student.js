@@ -5,6 +5,7 @@ const { renderStudents, createStudent, updateStudent, deleteStudent } = require(
 router.route("/")
   .get(renderStudents)
   .post(createStudent)
+router.route("/:id")
   .put(updateStudent)
   .delete(deleteStudent);
 
