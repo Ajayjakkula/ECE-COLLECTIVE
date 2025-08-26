@@ -11,8 +11,13 @@ const postSchema = new mongoose.Schema({
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Student",  
-    required: true
+    required: true,
+    refPath: "ownerModel"
+  },
+  ownerModel: {
+    type: String,
+    required: true,
+    enum: ["Student", "Faculty"]  
   },
   image: {
     type: String,
@@ -21,9 +26,13 @@ const postSchema = new mongoose.Schema({
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Student"   
+      refPath: "commentModel"
     }
-  ]
+  ],
+  commentModel: {
+    type: String,
+    enum: ["Student", "Faculty"]  
+  }
 });
 
 const Post = mongoose.model("Post", postSchema);

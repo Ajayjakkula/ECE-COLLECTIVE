@@ -1,20 +1,26 @@
 const mongoose = require("mongoose");
 
 const commentSchema = new mongoose.Schema({
-  commentcontent: {
+  text: {
     type: String,
     required: true
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Student", 
+    refPath: "ownerModel",
     required: true
   },
-  createdAt: {
-    type: Date,
-    default: Date.now  
+  ownerModel: {
+    type: String,
+    enum: ["Student", "Faculty"],
+    required: true
+  },
+  post: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Post",
+    required: true
   }
-});
+}, { timestamps: true });
 
 const Comment = mongoose.model("Comment", commentSchema);
 

@@ -14,3 +14,4 @@ module.exports.faculties = [
     { username: "Dr. Anjali", email: "anjali@example.com" },
     { username: "Dr. Kiran", email: "kiran@example.com" }
 ];
+
