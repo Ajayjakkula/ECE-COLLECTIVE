@@ -1,6 +1,7 @@
-const Post=require("../models/post")
+const Post=require("../models/post");
+const wrapAsync = require("../utils/wrapAsync");
 
-module.exports.renderPosts = async (req, res) => {
+module.exports.renderPosts = wrapAsync(async (req, res) => {
   try {
     const posts = await Post.find().populate("owner");
 
@@ -11,10 +12,10 @@ module.exports.renderPosts = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-};
+});
 
 
-module.exports.createPost = async (req, res) => {
+module.exports.createPost = wrapAsync(async (req, res) => {
   try {
     const { ownerid } = req.params;
     const newPost = new Post({
@@ -27,11 +28,11 @@ module.exports.createPost = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-};
+});
 
 
-module.exports.updatePost = async (req, res) => {
-  try {
+module.exports.updatePost = wrapAsync(async (req, res) => {
+
     const { ownerid,postid } = req.params; 
     const updatedPost = await Post.findByIdAndUpdate(postid, req.body, { new: true });
 
@@ -40,14 +41,12 @@ module.exports.updatePost = async (req, res) => {
     }
 
     res.json({ message: "Post updated successfully", post: updatedPost });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+  
+});
 
 
-module.exports.deletePost = async (req, res) => {
-  try {
+module.exports.deletePost = wrapAsync(async (req, res) => {
+
     const { ownerid,postid } = req.params; 
     const deletedPost = await Post.findByIdAndDelete(postid);
 
@@ -56,8 +55,6 @@ module.exports.deletePost = async (req, res) => {
     }
 
     res.json({ message: "Post deleted successfully" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+  
+});
 

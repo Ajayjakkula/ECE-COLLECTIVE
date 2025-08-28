@@ -1,68 +1,51 @@
 const Comment = require("../models/comments");
+const wrapAsync = require("../utils/wrapAsync");
 
-module.exports.renderComments = async (req, res) => {
-  try {
-    const { postId } = req.params;
-    const filter = postId ? { post: postId } : {};
+module.exports.renderComments = wrapAsync(async (req, res) => {
+  const { postId } = req.params;
+  const filter = postId ? { post: postId } : {};
 
-    const comments = await Comment.find(filter)
-      .populate("owner")
-      .populate("post"); 
+  const comments = await Comment.find(filter)
+    .populate("owner")
+    .populate("post");
 
-    res.json({
-      message: "List of Comments",
-      comments
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+  res.json({
+    message: "List of Comments",
+    comments
+  });
+});
 
-module.exports.createComment = async (req, res) => {
-  try {
-    const { text, ownerModel, post } = req.body;
-    const ownerId = req.user._id;
+module.exports.createComment = wrapAsync(async (req, res) => {
+  const { text, ownerModel, post } = req.body;
+  const ownerId = req.user._id;
 
-    const newComment = new Comment({
-      text,
-      owner: ownerId,
-      ownerModel,
-      post
-    });
+  const newComment = new Comment({
+    text,
+    owner: ownerId,
+    ownerModel,
+    post
+  });
 
-    await newComment.save();
-    res.status(201).json({ message: "Comment added successfully", comment: newComment });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+  await newComment.save();
+  res.status(201).json({ message: "Comment added successfully", comment: newComment });
+});
 
-module.exports.updateComment = async (req, res) => {
-  try {
-    const { ownerid,postid } = req.params;
-    const updatedComment = await Comment.findByIdAndUpdate(postid, req.body, { new: true });
+module.exports.updateComment = wrapAsync(async (req, res) => {
+  const { postid } = req.params;
 
-    if (!updatedComment) {
-      return res.status(404).json({ message: "Comment not found" });
-    }
+  const updatedComment = await Comment.findByIdAndUpdate(postid, req.body, { new: true });
 
-    res.json({ message: "Comment updated successfully", comment: updatedComment });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+  if (!updatedComment) throw new Error("Comment not found");
 
-module.exports.deleteComment = async (req, res) => {
-  try {
-    const { ownerid,postid } = req.params;
-    const deletedComment = await Comment.findByIdAndDelete(postid);
+  res.json({ message: "Comment updated successfully", comment: updatedComment });
+});
 
-    if (!deletedComment) {
-      return res.status(404).json({ message: "Comment not found" });
-    }
+module.exports.deleteComment = wrapAsync(async (req, res) => {
+  const { postid } = req.params;
 
-    res.json({ message: "Comment deleted successfully" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+  const deletedComment = await Comment.findByIdAndDelete(postid);
+
+  if (!deletedComment) throw new Error("Comment not found");
+
+  res.json({ message: "Comment deleted successfully" });
+});

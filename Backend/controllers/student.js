@@ -1,28 +1,23 @@
 const Student = require("../models/students");
+const wrapAsync = require("../utils/wrapAsync");
 
-module.exports.renderStudents = async (req, res) => {
-    try {
+module.exports.renderStudents = wrapAsync(async (req, res) => {
         const students = await Student.find({});
         res.json(students);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-};
+   
+});
 
-module.exports.createStudent = async (req, res) => {
-    try {
+module.exports.createStudent = wrapAsync(async (req, res) => {
         const { username, email, year, class: studentClass } = req.body;
         const newStudent = new Student({ username, email, year, class: studentClass });
         await newStudent.save();
         res.status(201).json(newStudent);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-};
+    
+});
 
 
-module.exports.updateStudent = async (req, res) => {
-    try {
+module.exports.updateStudent = wrapAsync(async (req, res) => {
+    
         const { id } = req.params;
         const { username, email, year, class: studentClass } = req.body;
         const updatedStudent = await Student.findByIdAndUpdate(
@@ -32,18 +27,14 @@ module.exports.updateStudent = async (req, res) => {
         );
         if (!updatedStudent) return res.status(404).send("Student not found");
         res.json(updatedStudent);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-};
+   
+});
 
-module.exports.deleteStudent = async (req, res) => {
-    try {
+module.exports.deleteStudent = wrapAsync(async (req, res) => {
+  
         const { id } = req.params;
         const deletedStudent = await Student.findByIdAndDelete(id);
         if (!deletedStudent) return res.status(404).send("Student not found");
         res.json({ message: "Student deleted successfully" });
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-};
+    
+});
