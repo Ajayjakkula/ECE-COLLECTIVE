@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Post = require("./post"); 
 
 const facultySchema = new mongoose.Schema({
   username: {
@@ -11,6 +12,16 @@ const facultySchema = new mongoose.Schema({
   }
 });
 
+facultySchema.post("findOneAndDelete", async function(faculty) {
+  if (faculty) {
+    await Post.deleteMany({ owner: faculty._id, ownerModel: "Faculty" });
+
+    await Post.updateMany(
+      {},
+      { $pull: { comments: faculty._id } }
+    );
+  }
+});
 
 const Faculty = mongoose.model("Faculty", facultySchema);
 

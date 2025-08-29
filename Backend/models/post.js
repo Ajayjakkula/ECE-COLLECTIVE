@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Comment = require("./comments");  
 
 const postSchema = new mongoose.Schema({
   title: {
@@ -26,12 +27,14 @@ const postSchema = new mongoose.Schema({
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      refPath: "commentModel"
+      ref: "Comment" 
     }
-  ],
-  commentModel: {
-    type: String,
-    enum: ["Student", "Faculty"]  
+  ]
+});
+
+postSchema.post("findOneAndDelete", async function(post) {
+  if (post) {
+    await Comment.deleteMany({ _id: { $in: post.comments } });
   }
 });
 

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Post = require("./post"); 
 
 const studentSchema = new mongoose.Schema({
   username: {
@@ -9,13 +10,24 @@ const studentSchema = new mongoose.Schema({
     type: String,
     required: true   
   },
-  year:{
-    type:Number,
+  year: {
+    type: Number,
     required: true
   },
-  class:{
-    type:Number,
-    required:true
+  class: {
+    type: Number,
+    required: true
+  }
+});
+
+studentSchema.post("findOneAndDelete", async function(student) {
+  if (student) {
+    await Post.deleteMany({ owner: student._id, ownerModel: "Student" });
+
+    await Post.updateMany(
+      {},
+      { $pull: { comments: student._id } }
+    );
   }
 });
 
