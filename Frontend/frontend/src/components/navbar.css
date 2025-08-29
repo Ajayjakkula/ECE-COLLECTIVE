@@ -1,0 +1,125 @@
+/* Navbar container */
+.navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  min-height: 70px;
+  z-index: 1000;
+}
+
+/* Navbar scrolled effect */
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Brand styling */
+.navbar-brand {
+  font-size: 1.5rem;
+  color: #dc2626;
+  transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+/* Nav links */
+.nav-link {
+  color: #374151 !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  color: #dc2626 !important;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.15);
+}
+
+/* Toggler button */
+.navbar-toggler {
+  border: none;
+  background: rgba(220, 53, 69, 0.1);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.navbar-toggler:hover {
+  background: rgba(220, 53, 69, 0.2);
+  transform: scale(1.05);
+}
+
+/* Dropdown button */
+#menuDropdown {
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  border: 2px solid #e5e7eb;
+  min-height: 44px;
+  min-width: 44px;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+#menuDropdown:hover {
+  transform: translateY(-2px);
+  border-color: #dc2626;
+  box-shadow: 0 8px 25px rgba(220, 53, 69, 0.15);
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  min-width: 180px;
+  padding: 0.5rem 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.dropdown-item:hover {
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  color: #dc2626;
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-link {
+    margin: 0.5rem 0;
+    text-align: center;
+    padding: 0.75rem 1rem !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  #menuDropdown {
+    padding: 0.5rem;
+    min-width: 40px;
+  }
+
+  .nav-link {
+    font-size: 0.95rem;
+  }
+}

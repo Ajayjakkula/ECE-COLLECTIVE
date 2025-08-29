@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Post = require("./post"); 
 
+const plm=require("passport-local-mongoose")
+
 const facultySchema = new mongoose.Schema({
   username: {
     type: String,
@@ -22,6 +24,8 @@ facultySchema.post("findOneAndDelete", async function(faculty) {
     );
   }
 });
+
+facultySchema.plugin(plm)
 
 const Faculty = mongoose.model("Faculty", facultySchema);
 

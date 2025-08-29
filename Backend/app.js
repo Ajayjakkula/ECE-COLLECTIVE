@@ -1,12 +1,9 @@
 const express = require("express");
-const cors = require("cors");
+const cors = require("cors"); 
 const methodOverride = require("method-override");
-const mongoose=require("mongoose");
-const ExpressError=require("./utils/ExpressError");
+const mongoose = require("mongoose");
+const ExpressError = require("./utils/ExpressError");
 const wrapAsync = require("./utils/wrapAsync");
-
-
-
 
 const app = express();
 
@@ -15,11 +12,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); 
 app.use(methodOverride("_method")); 
 
-// app.use(cors({
-//   origin: "http://localhost:5173",  
-//   methods: ["GET", "POST", "PUT", "DELETE"],
-//   credentials: true
-// }));
+app.use(cors({
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST", "PUT", "DELETE"]
+}));
+
 
 const facultyRouter = require("./routers/faculty");
 const studentRouter = require("./routers/student");

@@ -5,10 +5,9 @@ module.exports.renderPosts = wrapAsync(async (req, res) => {
   try {
     const posts = await Post.find().populate("owner");
 
-    res.json({
-      message: "List of posts",
+    res.json(
       posts
-    });
+    );
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

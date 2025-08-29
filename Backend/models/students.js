@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Post = require("./post"); 
 
+const plm=require("passport-local-mongoose")
+
 const studentSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -17,8 +19,15 @@ const studentSchema = new mongoose.Schema({
   class: {
     type: Number,
     required: true
+  },
+  password:{
+      type: Number,
+    required: true
   }
 });
+
+studentSchema.plugin(plm);
+
 
 studentSchema.post("findOneAndDelete", async function(student) {
   if (student) {
